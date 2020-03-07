@@ -1,0 +1,354 @@
+<!DOCTYPE>
+<html>
+  <head>
+   <style type="text/css">
+   TABLE {
+    background: white; /* Цвет фона таблицы */
+    color: white; /* Цвет текста */
+   }
+   TD, TH {
+    background: white; /* Цвет фона ячеек */
+    padding: 7px; /* Поля вокруг текста */
+   }
+  </style>
+  </head>
+
+  <body>
+    <table width = '500' height = '500' cellpading = '0' border = '1' padding-bottom: 50%>
+      <tbody id = 'tBody'>
+        
+      </tbody>
+        <script>
+          //    ГЕНЕРАЦИЯ ТАБЛИЦЫ
+          'use strict';
+          var X = 40, Y = 40;
+          
+          (function(){
+            let tBody = document.body.getElementsByTagName('tbody')[0];
+            for(let i = 0; i <= Y; i++){ 
+              var line = tBody.appendChild(document.createElement('tr'));
+              for(let j = 0; j <= X; j++){
+                line.appendChild(document.createElement('td'))
+              };
+            };
+          
+              for(let i = 6; i <= 34; i++){
+                tBody.rows[6].cells[i].style.background = 'green';
+                tBody.rows[34].cells[i].style.background = 'green';
+              };
+            }
+          )()
+        </script>
+    </table>
+
+        <script>
+        //      КЛАСС 'TANK'        //
+          function Tank(name, color = 'white', place = this.placeAppear(), dir = 'up', speed = 1) {
+            this.name = name;
+            this.color = color;
+            this.place = place;
+            this.dir = dir;
+            this.speed = speed > 0? 1000/speed : 1000;
+
+            this.arrDotTank = this.getArrDotTank().slice();
+          }
+          
+          Tank.prototype.drow = function(){
+            var self = this;
+            this.arrDotTank.forEach(function(item){
+            if(item[0] == self.place[0] && item[1] == self.place[1]) tBody.rows[item[0]].cells[item[1]].style.backgroundColor = 'green';
+            else tBody.rows[item[0]].cells[item[1]].style.backgroundColor = self.color;
+            });
+          };
+          Tank.prototype.clear = function(){
+            var tank = this;
+            this.arrDotTank.forEach(function(item){tBody.rows[item[0]].cells[item[1]].style.backgroundColor = '';})
+          };
+          Tank.prototype.step = function(){
+            var changeParam = [];
+            
+            switch(this.dir){
+              case 'up':
+                if(this.place[0] == 1 || 
+                tBody.rows[this.place[0] - 2].cells[this.place[1] - 1].style.backgroundColor != '' || 
+                tBody.rows[this.place[0] - 2].cells[this.place[1]].style.backgroundColor != '' || 
+                tBody.rows[this.place[0] - 2].cells[this.place[1] + 1].style.backgroundColor != '') return;
+                changeParam = [-1, 0];
+                break;
+              case 'right':
+                if(this.place[1] == X-1 || 
+                tBody.rows[this.place[0] - 1].cells[this.place[1] + 2].style.backgroundColor != '' || 
+                tBody.rows[this.place[0]].cells[this.place[1] + 2].style.backgroundColor != '' || 
+                tBody.rows[this.place[0] + 1].cells[this.place[1] + 2].style.backgroundColor != '') return;
+                changeParam = [0, 1];
+                break;
+              case 'down':
+                if(
+                this.place[0] == Y-1 || 
+                tBody.rows[this.place[0] + 2].cells[this.place[1] - 1].style.backgroundColor != '' || 
+                tBody.rows[this.place[0] + 2].cells[this.place[1]].style.backgroundColor != '' || 
+                tBody.rows[this.place[0] + 2].cells[this.place[1] + 1].style.backgroundColor != ''
+                ) return;
+                changeParam = [1, 0];
+                break;
+              case 'left':
+                if(this.place[1] == 1 || 
+                tBody.rows[this.place[0] - 1].cells[this.place[1] - 2].style.backgroundColor != '' || 
+                tBody.rows[this.place[0]].cells[this.place[1] - 2].style.backgroundColor != '' || 
+                tBody.rows[this.place[0] + 1].cells[this.place[1] - 2].style.backgroundColor != '') return;
+                changeParam = [0, -1];
+                break;
+            };
+            
+            this.place[0] += changeParam[0];
+            this.place[1] += changeParam[1];
+            
+            this.clear();
+            this.arrDotTank = this.getArrDotTank();
+            this.drow();
+            
+          };
+          Tank.prototype.move = function(){
+            var self = this;
+            this.timer = setInterval(self.step.bind(self), self.speed);
+          };
+          Tank.prototype.stop = function(){
+            clearInterval(this.timer);
+          };
+          Tank.prototype.rotateUp = function(){
+            if(this.dir == 'down') return;
+            this.dir = 'up';
+            this.clear();
+            this.arrDotTank = this.getArrDotTank();
+            this.drow();
+          };
+          Tank.prototype.rotateRight = function(){
+            if(this.dir == 'left') return;
+            this.dir = 'right';
+            this.clear();
+            this.arrDotTank = this.getArrDotTank();
+            this.drow();
+          };
+          Tank.prototype.rotateDown = function(){
+            if(this.dir == 'up') return;
+            this.dir = 'down';
+            this.clear();
+            this.arrDotTank = this.getArrDotTank();
+            this.drow();
+          };
+          Tank.prototype.rotateLeft = function(){
+            if(this.dir == 'right') return;
+            this.dir = 'left';
+            this.clear();
+            this.arrDotTank = this.getArrDotTank();
+            this.drow();
+          };
+          
+          Tank.prototype.getArrDotTank = function(){
+            var arr = [
+            [[this.place[0]-1, this.place[1]-1],[this.place[0]-1, this.place[1]+0], [this.place[0]-1, this.place[1]+1]],
+
+            [[this.place[0]+0, this.place[1]-1],[this.place[0]+0, this.place[1]+0], [this.place[0]+0, this.place[1]+1]],
+
+            [[this.place[0]+1, this.place[1]-1],[this.place[0]+1, this.place[1]+0], [this.place[0]+1, this.place[1]+1]]
+            ];
+            
+            this.place[0] = arr[1][1][0];
+            this.place[1] = arr[1][1][1];
+            
+            var arrTankTemplate = [
+            [[0],[1],[0]],
+            [[1],[1],[1]],
+            [[1],[0],[1]]
+            ];
+            var rotate = function(){
+            var newArr = [[[],[],[]],[[],[],[]],[[],[],[]]];
+              for(var i = 0; i < 3; i++){
+                for(var j = 0; j < 3; j++){
+                  newArr[j][2-i] = arrTankTemplate[i][j];
+                };
+              };
+              arrTankTemplate = newArr.slice();
+            };
+            switch(this.dir){
+              case 'up':
+                break;
+              case 'right':
+                rotate();
+                break;
+              case 'down':
+                rotate();
+                rotate();
+                break;
+              case 'left':
+                rotate();
+                rotate();
+                rotate();
+                break;
+            };
+
+            var result = [];
+            for(var i = 0; i < arr.length; i++){
+              for(var j = 0; j < arr.length; j++){
+                if(arrTankTemplate[i][j] == 1) result.push([arr[i][j][0], arr[i][j][1]]);
+              };
+            };
+
+            return result;
+          };
+
+          Tank.prototype.placeAppear = function(){};
+          Tank.prototype.shoot = function(){};
+
+        </script>
+        
+        <script>
+        //      Класс 'TankBot'     //
+        
+        function TankBot(){
+          Tank.apply(this, arguments);
+          
+        };
+        TankBot.prototype = Object.create(Tank.prototype);
+        
+        TankBot.prototype.look = function(){
+          //регионы заполняются по часовой стрелке, угол региона 45 град
+          // один регион - это часть линии границы карты, которая попадает по углу обзора танка (180 град)
+           let arr = [];
+            
+            var getRegion1 = () => {
+            for(var x = this.place[1]; x <= X; x++){ 
+                var stop = false;
+                for(var y = this.place[0]; y >= 0; y--){
+                  var x1 = Math.round(this.place[1] - (this.place[1]-x)*(this.place[0] - y)/(this.place[0]) );
+                  if(y > this.place[0] -2 && x1 < this.place[1] +2 ) continue;
+                  if(stop || tBody.rows[y].cells[x1].style.background != '') stop = true;
+                  else arr.push([y, x1]);
+                };
+              };
+            };
+            var getRegion2 = () => {
+            for(var y = this.place[0]; y >= 0; y--){
+                 var stop = false;
+                 for(var x = this.place[1]; x <= X; x++){
+                   var y1 = Math.round(this.place[0] - (this.place[0]-y)*(x - this.place[1])/(X - this.place[1]) );
+                   if(y1 < this.place[0] +2 && x < this.place[1] +2 ) continue;
+                   if(stop || tBody.rows[y1].cells[x].style.background != '') stop = true;
+                   else arr.push([y1, x]);
+                 };
+               };
+            };
+            var getRegion3 = () => {
+            
+            for(var y = this.place[0]; y <= Y; y++){
+               var stop = false;
+               for(var x = this.place[1]; x <= X; x++){
+                 var y1 = Math.round(this.place[0] + (y - this.place[0])*(x - this.place[1])/(X - this.place[1]) );
+                 if(y1 < this.place[0] +2 && x < this.place[1] +2 ) continue;
+                 if(stop || tBody.rows[y1].cells[x].style.background != '') stop = true;
+                 else arr.push([y1, x]);
+                 };
+               };
+            }; 
+            var getRegion4 = () => {
+              for(var x = this.place[1]; x <= X; x++){ 
+                 var stop = false;
+                 for(var y = this.place[0]; y <= Y; y++){
+                   var x1 = Math.round(this.place[1] + (x - this.place[1])*(y - this.place[0])/(Y - this.place[0]) );
+                   if(y < this.place[0] +2 && x1 < this.place[1] +2 ) continue;
+                   if(stop || tBody.rows[y].cells[x1].style.background != '') stop = true;
+                   else arr.push([y, x1]);
+                 };
+               };
+            };
+            var getRegion5 = () => {
+            for(var x = this.place[1]; x >= 0; x--){ 
+               var stop = false;
+               for(var y = this.place[0]; y <= Y; y++){
+                  var x1 = Math.round(this.place[1] - (this.place[1]-x)*(y - this.place[0])/(Y - this.place[0]) );
+                  if(y < this.place[0] +2 && x1 > this.place[1] - 2 ) continue;
+                  if(stop || tBody.rows[y].cells[x1].style.background != '') stop = true;
+                  else arr.push([y, x1]);
+                };
+              };
+            };
+            var getRegion6 = () => {
+              for(var y = this.place[0]; y <= Y; y++){
+                var stop = false;
+                  for(var x = this.place[1]; x >= 0; x--){
+                    var y1 = Math.round(this.place[0] + (y - this.place[0])*(this.place[1] - x)/this.place[1]);
+                    if(y1 < this.place[0] +2 && x > this.place[1] -2 ) continue;
+                    if(stop || tBody.rows[y1].cells[x].style.background != '') stop = true;
+                    else arr.push([y1, x]);
+                  };
+               };
+            };
+            var getRegion7 = () => {
+              for(var y = this.place[0]; y >= 0; y--){
+                 var stop = false;
+                 for(var x = this.place[1]; x >= 0; x--){
+                   var y1 = Math.round(this.place[0] - (this.place[0]-y)*(this.place[1] - x)/this.place[1]);
+                   if(y1 > this.place[0] -2 && x > this.place[1] -2 ) continue;
+                   if(stop || tBody.rows[y1].cells[x].style.background != '') stop = true;
+                   else arr.push([y1, x]);
+                 };
+               };
+            };
+            var getRegion8 = () => {
+              for(var x = this.place[1]; x >= 0; x--){
+                var stop = false;
+                for(var y = this.place[0]; y>=0; y--){
+                  var x1 = Math.round(this.place[1] - (this.place[1] - x)*(this.place[0] - y)/this.place[0]);
+                  if(y > this.place[0] -2 && x1 > this.place[1] -2 ) continue;
+                  if(stop || tBody.rows[y].cells[x1].style.background != '') stop = true;
+                   else arr.push([y, x1]);
+                };
+              };
+            };
+            
+            
+            switch(this.dir){
+             case 'up':
+               getRegion7();
+               getRegion8();
+               getRegion1();
+               getRegion2(); 
+               break;
+             case 'right':
+               getRegion1();
+               getRegion2();
+               getRegion3();
+               getRegion4();
+               break;
+             case 'down':
+               getRegion3();
+               getRegion4();
+               getRegion5();
+               getRegion6();
+               break;
+             case 'left':
+               getRegion5();
+               getRegion6();
+               getRegion7();
+               getRegion8();
+               break;
+            };
+            this.region = arr;
+          };
+        </script>
+        
+        
+
+        <script>
+        //      БОТ         //
+
+        var tank = new TankBot('Bot1', 'red', [20 ,20], 'up', 1);
+        tank.drow();
+        
+        setInterval(function(){tank.look(); tank.region.forEach(function(item){tBody.rows[item[0]].cells[item[1]].style.background = 'red'; }); setTimeout(function(){tank.region.forEach(function(item){tBody.rows[item[0]].cells[item[1]].style.background = ''; });}, tank.speed/2)}, tank.speed);
+        
+        </script>
+
+  </body>
+
+</html>
