@@ -1,0 +1,13 @@
+
+table {
+  margin: auto;
+  border: solid 3px #aaaafe;
+  border-spacing: 0px;
+}
+
+td { 
+  background: #000000;
+  padding: 6px;
+  margin: 0;
+  border-width: 0;
+}
