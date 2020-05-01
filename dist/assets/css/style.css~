@@ -1,0 +1,343 @@
+body {
+  background: #000111;
+}
+
+button, input {
+  height: 25px;
+  width: 220px;
+  border: none;
+  border-radius: 2px;
+  text-align: center;
+  margin: 12px auto; /* 22 */
+   color: white;
+  display: block;
+}
+
+input:active, button:active{
+  outline: none;
+}
+
+input:hover, button:hover{
+  border: none;
+  outline: none;
+  box-shadow: 0 0 0px 5px rgba(110, 60, 240, .8);
+}
+
+input:focus, button:focus {
+  outline: none;
+}
+
+
+/* container */
+.container {
+  width: 100%;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+/*header*/
+.header {
+  width: 100%;
+  padding-top: 30px;
+  position: absolute;
+  top: 0; left: 0; right: 0;
+  z-index: 1000;
+}
+
+.header_inner {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.header_logo {
+    color: white;
+    margin: auto;
+    text-transform: uppercase;
+}
+
+.header_logo > span {
+  display: inline-block;
+  position: relative;
+  font-size: 30px;
+  font-weight: 600;
+  font-family: 'Wallpoet-Regular';
+}
+
+.content {
+  width: 100%;
+  padding-top: 60px;
+}
+
+/* form-avtorize */
+.autorize {
+  width: 300px;
+  margin: 60px auto;
+  position: relative;
+}
+
+.autorize > div {
+  position: relative;
+}
+
+.autorize button, .autorize input {
+ background: #331166;
+}
+
+.autorize button {
+  font-family: 'Wallpoet-Regular';
+  font-weight: 300;
+  font-size: 19px; /* 9px */
+}
+
+.autorize button:active {
+  color: #fc5555;
+}
+
+.autorize_input_valid {
+  color: red;
+  float: left;
+  position: absolute; 
+  left: 270px;
+  top: 0px;
+  bottom: 0px;
+  line-height: 1.0em;
+  font-size: 12px;
+}
+
+.autorize_input_valid > div {
+  display: inline-block;
+  width: 150px;
+}
+
+.autorize_button_registration {
+  margin-top: 20px;
+  width: 150px;
+  height: 20px;
+  border-radius: 15px;
+  background: #449922 !important;
+  font-size: 15px !important;
+}
+
+.autorize_button_registration:hover{
+  border: none;
+  outline: none;
+  box-shadow: 0 0 0px 5px rgba(33, 77, 11, .8);
+}
+
+/*form-registration */
+.registration {
+  width: 300px;
+  margin: 60px auto;
+  position: relative;
+}
+
+.registration > div {
+  position: relative;
+}
+
+.registration button, .registration input {
+ background: #331166;
+}
+
+.registration button {
+  font-family: 'Wallpoet-Regular';
+  font-weight: 300;
+  font-size: 19px; /* 9px */
+}
+
+.registration button:active {
+  color: #fc5555;
+}
+
+.registration_input_valid {
+  color: red;
+  float: left;
+  position: absolute; 
+  left: 270px;
+  top: 0px;
+  bottom: 0px;
+  line-height: 1.0em;
+  font-size: 12px;
+}
+
+.registration_input_valid > div {
+  display: inline-block;
+  width: 150px;
+}
+/*form-players-room */
+
+.parent_table {
+  float: left;
+  width: 600px;
+}
+
+.form-players-room {
+  width: 800px;
+  height: 600px;
+  margin: 30px auto;
+  color: #eeffee;
+}
+
+.my_profil {
+  width: 200px;
+  height: 100%;
+  border-radius: 6px;
+  float: left;
+  background: #110122;
+}
+
+.my_avatar {
+  width: 150px;
+  height: 150px;
+  margin: 17px auto;
+  background-image: url('assets/image/my_avatar.jpg');
+}
+
+.my_nickname {
+  text-align: center;
+  width: 100%;
+  color: #aa4444;
+}
+
+.my_profil button, .my_profil input {
+  width: 170px;
+  background: #221155;
+}
+
+.form-players-room * {
+}
+
+.external_rooms_list {
+  width: 580px;
+  float: left;
+  margin: 0;
+}
+
+.external_rooms_list > div {
+  float: left;
+  display: block;
+  border: 1px solid white;
+  height: 40px;
+  line-height: 38px;
+  text-align: center;
+  box-sizing: border-box;
+  background: #110122;
+}
+
+.parent_rooms_list {
+  width: 580px;
+  overflow: hidden;
+}
+
+.rooms_list {
+  overflow: scroll;
+  overflow-x: hidden;
+  height: 543px;
+  width: 560px;
+  float: left;
+}
+
+.room_item {
+  list-style-type: none;
+  padding: 0;
+  margin: 0;
+  display: inline-block;
+  margin-bottom: 5px;
+}
+
+.room_item > div {
+  float: left;
+  border: 1px solid #332244;
+  height: 30px;
+  text-indent: 12px;
+  line-height: 29px;
+  box-sizing: border-box;
+  background: #090818;
+  transition: background .5s;
+}
+
+.room_item:hover div {
+  background: #221066;
+  animation: flicker 4s linear infinite;
+}
+
+
+.room_number {
+  text-indent: 0px !important;
+  border-radius: 4px;
+  margin-right: 4px;
+}
+
+.room_number {
+  text-indent: 0px !important;
+  text-align: center;
+}
+
+.room_number, .external_room_number  {
+  width: 30px;
+/*  color: #aa66ff;*/
+  border-radius: 4px;
+  margin-right: 4px;
+}
+
+.room_name, .external_room_name  {
+  width: 180px;
+  border-radius: 4px 0px 0px 4px;
+/*  color: #ff66bb;*/
+}
+
+.room_owner, .external_room_owner {
+  width: 180px;
+/*  color: #ff4433;*/
+}
+
+.room_participants, .external_room_participants {
+  width: 40px;
+  text-indent: 0px !important;
+  text-align: center;
+}
+
+.room_access, .external_room_access {
+  width: 100px;
+  border-radius: 0px 4px 4px 0px;
+/*  color: #33ff44;*/
+}
+
+/*
+table {
+  margin: auto;
+  border: solid 3px #aaaafe;
+  border-spacing: 0px;
+}
+
+td { 
+  background: #000000;
+  padding: 6px;
+  margin: 0;
+  border-width: 0;
+}
+*/
+
+/* form-players-room */
+
+
+@keyframes flicker {
+  0% {background: #090818}
+  10% {background: #4b0082}
+  20% {background: #8b008b}
+  30% {background: #ff4500}
+  40% {background: #ffa500}
+  50% {background: #32cd32}
+  60% {background: #ffa500}
+  70% {background: #ff4500}
+  80% {background: #8b008b}
+  90% {background: #4b0082}
+  95% {background: #3b0062}
+  100% {background: #090818}
+}
+
+@font-face {
+font-family: "Wallpoet-Regular";
+src: url("../fonts/Wallpoet-Regular.ttf")format("truetype"); 
+}
